@@ -7,12 +7,13 @@ const guessInput = document.querySelector('.guessInput');
 const guessCheckBtn = document.querySelector('.guessCheckBtn');
 const playAgainBtn = document.querySelector('.playAgainBtn');
 const message = document.querySelector('.message');
+const chances = document.querySelector('.chances');
 
 guessCheckBtn.addEventListener('click', () => {
     const guessNumber = parseInt(guessInput.value);
 
     if (guessNumber === randomNum) {
-        currentMessage = 'You Won!!';
+        currentMessage = `You Won!! Correct answer is ${randomNum}`;
         updateMessage;
         playAgain();
     }
@@ -32,11 +33,12 @@ guessCheckBtn.addEventListener('click', () => {
     updateMessage();
 
     if (count >= 3 && guessNumber != randomNum) {
-        currentMessage = 'You lost !!';
+        currentMessage = `You lost !! Correct answer is ${randomNum}`;
         updateMessage();
         playAgain();
     }
     count++;
+    setChances(parseInt(chances.textContent) - 1);
 
 });
 
@@ -44,6 +46,7 @@ playAgainBtn.addEventListener('click', () => {
     randomNum = getRandomNumber();
     count = 1;
     currentMessage = 'Guess first !!';
+    setChances(3);
     updateMessage();
     playAgainBtn.style.display = 'none';
     inputs.style.display = 'flex';
@@ -55,11 +58,15 @@ function getRandomNumber() {
 }
 
 function updateMessage() {
-    message.innerHTML = currentMessage;
+    message.textContent = currentMessage;
 }
 
 function playAgain() {
     inputs.style.display = 'none';
     playAgainBtn.style.display = 'block';
+}
+
+function setChances(numOfChances) {
+    chances.textContent = numOfChances;
 }
 
